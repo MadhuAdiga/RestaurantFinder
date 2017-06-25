@@ -1,0 +1,99 @@
+<div class="container container-fluid"><br/>
+    <router-outlet></router-outlet><!--Router outlet for the ruting on click of a restaurant-->
+
+    <form #f="ngForm"> <!-- Create a form object  -->
+
+<!-----------------------------------Input selction on locality starts---------------------------------------------------------------->
+        <div class="row"> <!-- Create a bootstrap grid row -->
+            <div class="col-lg-3 col-md-4"> <!-- Create a bootstrap column  -->                  
+                <select class="form-control" #loc (change)="updateloc(loc.value)" [disabled]="cusineInputValidated"> <!-- Create a select dropdown, with a list of localities, on click trigger a function and is disabled when the cuisine filter is in use -->
+                    <option>Select your locality</option>
+                    <option *ngFor="let loc of locData" [value]="loc.name">{{loc.name}}</option>  <!-- Iterate through the location array and display as dropdown  -->
+                </select>
+            </div>
+
+ <!----------------------------------Input selction on Cuisine starts------------------------------------------------------------------>
+
+            <div class="col-lg-6" style="float:right"> <!-- Create a division for filtering by cuisine  -->
+                <label style="color:white; font-size:1.2em; font-weight:bold" >Filter by Cuisine</label>
+                <input type="text" style="border-radius:5px; background-color:#CF8200"  [disabled]="selectedLoc && selectedLoc !== 'Select your locality'" [(ngModel)]="filterBy" name="filterBy" [value]="filterBy" ngModel (change)="onChange(filterBy)" > <!-- Create an ngModel object and disable the object when location is in use  -->  
+                <span><button class="btn btn-xs btn-info" (click)="clearAll(filterBy)">Clear Filters</button></span><!-- Create a button for clearing the current filters and trigger a clearAll function on click  -->
+            </div>
+        </div><br>
+<!---------------------------------------------Input area ends ------------------------------------------------------------------------>
+                        
+                        
+        <div class="row"> <!-- Create a bootstrap row  -->
+            <div class="col-lg-6 col-md-6"> <!-- Create a bootstrap column  -->
+                <div *ngFor="let x of restoData"> <!--Iterate through restaurant array  -->
+                    <div *ngFor="let y of x.cuisine"> <!--Iterate through each restaurant object  -->
+                        <div class="row restolist"  *ngIf="((filterBy|lowercase) == (y |lowercase)) || (!selectedLoc && selectedLoc == 'Select your locality')"> <!-- Display only if input cusine matches with the current restaurant and if location is not selected  -->
+                            <div class="col-lg-12"> <!-- Create a bootstrap column  -->
+                                <div class="media"> <!-- Create a bootstrap media class -->
+                                    <div class="media-left"> <!--Display an image of the restaurant on the left  -->
+                                        <img src={{x.gallery}} class="media-object" style="width:100px"> <!-- Display the image of the current restaurant from the gallery key in the object  -->
+                                    </div>
+                                    <div class="media-body"> <!-- Display the name of the restaurant  -->
+                                        <h4 class="media-heading"><b> 
+                                            <a routerLink="/restaurant" routerLinkActive="active" (click)="updateresto(x.id)" >{{x.name}}</a></b><!-- Create a router link to the  /restaurant page and update restaurant id on click -->
+                                        </h4>
+                                        <p style="color:grey">{{x.address}}</p> <!-- Display the full address of the current restaurant -->
+                                    </div><hr>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6"> <!-- Create a bootstrap column  -->
+                <resto-detail *ngIf="cusineInputValidated" [child_selectedRestoId]="selectedRestoId" [child_cusineInputValidated]="cusineInputValidated" [child_hideResto]="hideResto"></resto-detail> <!-- Displays the details of the restaurant on click of the link. Send two parameters child_selectedRestoId and child_cusineInputValidated to the child component  -->
+            </div>
+        </div>
+
+<!---------------------------------------------List of filtered restaurants ends ------------------------------------------------------------------------>
+<!---------------------------------------------Prompting for cuisines available ------------------------------------------------------------------------>
+        <div id="cuisineSuggestion" *ngIf="filterBy && !cusineInputValidated"> <!-- Division to prompt the user to select one of the available cuisines and display only if the use is attempting to use the filter  -->
+            Would you be interested in:<br>
+                Andhra<br>
+                Chinese<br>
+                Continental<br>
+                European <br>
+                Mediterranean<br>
+                Mughlai<br>
+                North Indian<br>
+                Thai<br>
+        </div>
+
+
+<!------------------------------------------------------------Filter divsion ends -------------------------------------------------------------->
+        <h4 style="color: white" *ngIf="selectedLoc && selectedLoc!=='Select your locality'">Suggested restaurants near {{selectedLoc}}</h4><br/>
+
+        <div class="container">  
+            
+            <div class="row"> <!-- Create a bootstrap row  -->
+                <div class="col-lg-6 col-md-6"> <!-- Create a bootstrap column  -->
+                    <div *ngFor="let x of restoData"> <!-- Iterate through restaurant array  -->
+                        <div class="row restolist" *ngIf="selectedLoc===x.location && selectedLoc!=='Select your locality'">  <!-- Display only if location filter is being used  -->
+                            <div class="col-lg-12"> <!-- Create a bootstrap column  -->
+                                <div class="media"> <!-- Display a bootstrap media class  -->
+                                    <div class="media-left"> <!-- Display the restaurant image on the left  -->
+                                        <img src={{x.gallery}} class="media-object" style="width:100px"> <!-- Display the gallery key of the restaurant object  -->
+                                    </div>
+                                    <div class="media-body" *ngIf="selectedLoc===x.location"> <!-- Display the name of the restaurant  -->
+                                        <h4 class="media-heading"><b> 
+                                            <a routerLink="/restaurant" routerLinkActive="active" (click)="updateresto(x.id)">{{x.name}}</a></b>
+                                        </h4>
+                                        <p style="color:grey">{{x.address}}</p><!-- Display the full address of the restaurant  -->
+                                    </div><hr>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6"> <!-- Create a bootstrap grid column  -->
+                    <resto-detail *ngIf="selectedLoc && selectedLoc!=='Select your locality'" [child_selectedRestoId]="selectedRestoId"></resto-detail><!-- Displays the details of the restaurant on click of the link. Send two parameters child_selectedRestoId and child_cusineInputValidated to the child component  -->
+                </div>
+            </div>
+        </div>         
+    </form><br>
+</div>
