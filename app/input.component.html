@@ -1,4 +1,4 @@
-<div class="container container-fluid"><br/>
+<div class="container container-fluid">
     <router-outlet></router-outlet><!--Router outlet for the ruting on click of a restaurant-->
 
     <form #f="ngForm"> <!-- Create a form object  -->
@@ -66,7 +66,8 @@
 
 
 <!------------------------------------------------------------Filter divsion ends -------------------------------------------------------------->
-        <h4 style="color: white" *ngIf="selectedLoc && selectedLoc!=='Select your locality'">Suggested restaurants near {{selectedLoc}}</h4><br/>
+        <h5 style="color: white" *ngIf="selectedLoc && selectedLoc!=='Select your locality'">Suggested restaurants near {{selectedLoc}}</h5><br/>
+        
 
         <div class="container">  
             
