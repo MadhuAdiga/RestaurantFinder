@@ -1,7 +1,7 @@
 <div class="container" style="max-width:90%" *ngIf="!child_hideResto"><!-- Display only if child_hideResto is false  -->
     <div *ngFor="let x of restoData"><!--Iterate through the restoData array  -->
         <div class="panel panel-primary" *ngIf="x.id==child_selectedRestoId"> <!-- Display if  the current restoData id is equal to the input value of the user   -->
-            <div class="panel-heading" *ngIf="x.id==child_selectedRestoId"><h4>{{x.name}}</h4> <!-- Display the restuarant name -->
+            <div class="panel-heading" *ngIf="x.id==child_selectedRestoId"><h5>{{x.name}}</h5> <!-- Display the restuarant name -->
                 <span class="badge" [style.background-color]="getStyle(x.stars)">{{x.stars | number : '1.1-1'}}</span><!-- Display the star ratings and styled by getStyle function  -->
                 <button class="btn btn-info btn-sm" style="float:right; font:white"><!-- Button to the menu   -->
                 <a href={{x.menu}} target="_blank" data-lightbox="menu">View Menu</a></button></div><!-- Hyperlink to display the menu image in a new tab  -->
