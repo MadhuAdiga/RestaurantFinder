@@ -22,5 +22,5 @@ var AppComponent = (function () {
     ], AppComponent);
     return AppComponent;
 }());
-exports.AppComponent = AppComponent;
+exports.AppComponent = AppComponent; //value of the loading variable
 //# sourceMappingURL=app.component.js.map
