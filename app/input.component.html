@@ -17,7 +17,7 @@
             <div class="col-lg-6" style="float:right"> <!-- Create a division for filtering by cuisine  -->
                 <label style="color:white; font-size:1.2em; font-weight:bold" >Filter by Cuisine</label>
                 <input type="text" style="border-radius:5px;font-weight:bold;padding-left:5px"  [disabled]="selectedLoc && selectedLoc !== 'Select your locality'" [(ngModel)]="filterBy" name="filterBy" [value]="filterBy" ngModel (change)="onChange(filterBy)" > <!-- Create an ngModel object and disable the object when location is in use  -->  
-                <span><button class="btn btn-xs btn-info" (click)="clearAll(filterBy)">Clear Filters</button></span><!-- Create a button for clearing the current filters and trigger a clearAll function on click  -->
+                <span><button class="btn btn-md btn-danger" (click)="clearAll(filterBy)">Clear Filters</button></span><!-- Create a button for clearing the current filters and trigger a clearAll function on click  -->
             </div>
         </div><br>
 <!---------------------------------------------Input area ends ------------------------------------------------------------------------>
